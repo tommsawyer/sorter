@@ -24,8 +24,18 @@ class SorterStrategy {
 }
 
 class SorterFactory {
-  static createSorterStrategy(fieldType, direction) {
+  static getFieldType(value) {
+    if (value instanceof Date) {
+      return 'date';
+    }
+
+    return typeof value;
+  }
+
+  static createSorterStrategy(field, direction) {
     let comparator;
+    const fieldType = SorterFactory.getFieldType(field);
+
     switch(fieldType) {
       case 'string':
         comparator = new StringComparator(direction); break;
